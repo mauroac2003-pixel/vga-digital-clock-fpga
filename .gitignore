@@ -1,0 +1,19 @@
+# Archivos de simulacion y sintesis Vivado
+*.log
+*.jou
+*.str
+*.tmp
+*.bit
+*.ltx
+*.prm
+*.rpt
+
+# Carpetas generadas por herramientas
+*.cache/
+*.runs/
+*.Xil/
+*.ip_user_files/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
