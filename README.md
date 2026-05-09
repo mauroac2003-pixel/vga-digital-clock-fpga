@@ -6,7 +6,8 @@ Se conversó entre los integrantes del grupo sobre el diagrama de bloques del pr
 
 # Creación del proyecto en Vivado
 ## 17/Abr/2026 - 19/Abr/2026
-Gabriel Arguedas: Estuve trabajando en vivado y realizando algunos módulos, basandome en el libro de teoría EL3313__Book.pdf y en algunos laboratorios anteriores como los de la calculadora o el semaforo, ademas de que me puse a buscar informacion sobre los debouncer, divisores de reloj, displays de 7 segmentos ya que estos módulos son parte fundamental del funcionamiento del proyecto. Una vez obtuve esa información del libro utilicé la inteligencia artificial para lograr plasmar correctamente la síntesis de vivado y poder crear de una correcta manera (quizá no la mas eficiente) los siguientes módulos:
+**Gabriel Arguedas:**
+Estuve trabajando en vivado y realizando algunos módulos, basandome en el libro de teoría EL3313__Book.pdf y en algunos laboratorios anteriores como los de la calculadora o el semaforo, ademas de que me puse a buscar informacion sobre los debouncer, divisores de reloj, displays de 7 segmentos ya que estos módulos son parte fundamental del funcionamiento del proyecto. Una vez obtuve esa información del libro utilicé la inteligencia artificial para lograr plasmar correctamente la síntesis de vivado y poder crear de una correcta manera (quizá no la mas eficiente) los siguientes módulos:
 - clock_divider.v (Corresponde al divisor de reloj, creado para el conteo de segundos)
 - debouncer.v (Evita el rebote en los botones y switches de la FPGA)
 - display_7seg.v (Muestra la hora y el conteo de los ss, mm y hh en los displays correspondientes)
