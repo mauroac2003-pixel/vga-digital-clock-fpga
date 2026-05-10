@@ -16,7 +16,6 @@ Estuve trabajando en vivado y realizando algunos módulos, basandome en el libro
 
 También realicé pruebas y simulaciones en vivado para ver como avanzaba el conteo de los ss, mm y hh, esto para verificar que funcionara correctamente, lo cual afortunadamente si funcionó, como ya la simulacion me servía le pasé lo que tenía a los compañeros por el grupo de whatsapp y ahí el compañero Josué hizo la prueba del código en la FPGA y funcionó correctamente.
 
-# Implementación de modulos 
 ## 24/Abr/2026 - 27/Abr/2026
 **Josué Arce Cruz - Mauro Agustin Navarro Acuña:**
 Se trabajó en la implementación de los modulos de memoria de video, módulo controlador VGA y módulo generador de imagen, el módulo de control de hora fue implementando por el compañaero Gabriel y valido su funcionamiento.
