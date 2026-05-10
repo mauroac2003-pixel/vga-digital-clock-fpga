@@ -32,6 +32,11 @@ module vram (
 
     // Forzar el uso de BRAM
     (* ram_style = "block" *) reg [11:0] mem [0:307199];
+    
+    // Inicializar la BRAM
+    initial begin
+        $readmemh("fondo_profe.coe", mem);
+    end
 
     // Puerto A - escritura
     always @(posedge clk) begin
