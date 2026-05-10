@@ -29,5 +29,6 @@ Por ejemplo: 8'h03
 Significa: Digito 0, fila 3 de ese digito, por lo cual indica 8'h03: data = 8'b01100110
 - BRAM: Funciona como una memoria de video encargada de almacenar la imagen completa que será mostrada en pantalla. Utiliza dos puertos: Puerto A de escritura de píxeles y Puerto B lectura de píxeles.
 El puerto A permite que otros modulos escriban en el, por ejemplo cuando se modifica la hora y el puerto B permite que el controlador VGA consulte continuamente los colores de cada píxel para ser enviados al monitor. Además la memoria se inicializa con una imagen de fondo utilizando un archivo (.coe).
-- top_reloj: Este modulo fue reutilizado ya que fue implementado por el compañero Gabriel para probar el control de hora, las modificaciones implementadas son simplemente que siga funcionando como modulo top en el cual se instanciaron los modulos anteriormente mencionados. 
+- top_reloj: Este modulo fue reutilizado ya que fue implementado por el compañero Gabriel para probar el control de hora, las modificaciones implementadas son simplemente que siga funcionando como modulo top en el cual se instanciaron los modulos anteriormente mencionados.
+
 Por ultimo se realizó la unión de todos los modulos nuevos con los ya implementados por el compañero Gabriel, se realizó la sintetización de cada uno de ellos y se validó el correcto funcionamiento del proyecto usando uno de los monitores del laboratorio. 
