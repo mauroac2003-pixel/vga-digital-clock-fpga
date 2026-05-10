@@ -15,3 +15,18 @@ Estuve trabajando en vivado y realizando algunos módulos, basandome en el libro
 - control_hora_manual.v (Se encarga de llevar el conteo en segundos y hacer funcional el modo editor de hora).
 
 También realicé pruebas y simulaciones en vivado para ver como avanzaba el conteo de los ss, mm y hh, esto para verificar que funcionara correctamente, lo cual afortunadamente si funcionó, como ya la simulacion me servía le pasé lo que tenía a los compañeros por el grupo de whatsapp y ahí el compañero Josué hizo la prueba del código en la FPGA y funcionó correctamente.
+
+# Implementación de modulos para 
+## 24/Abr/2026 - 27/Abr/2026
+**Josué Arce Cruz - Mauro Agustin Navarro Acuña:**
+Se trabajó en la implementación de los modulos de memoria de video, módulo controlador VGA y módulo generador de imagen, el módulo de control de hora fue implementando por el compañaero Gabriel y valido su funcionamiento.
+## Lista de modulos implementados:
+- clk_25MHZ: Moduó encargado de generar el reloj para la señal VGA el cual usa un clock de 25MHz.
+- vga_sync: Genera las señales de sincronización VGA usando contaddores horizontales y verticales. Estos contadores recorren la pantalla siguiendo los tiempos del protocolo VGA como lo son **Front Porch, Sync, Back Porch** y producen señales **hsync** y **vsync** para indicar el final de una linea y de cada frame. La señal **video_en** indica cuando se encuentra dentro de la zona visible donde se pueden dibujar píxeles.
+- img_gen: Recorre los píxeles de la pantalla y genera la imagen final que será almacenada en la VRAM. Utiliza una imagen de fondo y dibuja encima un reloj dijital consulta la font_rom para determinar que píxeles de cada digito deben encenderse y como se ven los numeros. Además, implementa un modo de edición con parpadeo para resaltas cuando se encuentre modificando horas, minutos  y segundos, según sea seleccionado.
+- font_rom: Encargado de almacenar la representación en píxeles de cada digito a mostrar en el reloj. Cada dirección corresponde a una fila especifica de un carácter, el módulo devuelve 8 bits que indican que píxeles deben encenderse o apagarse para dibujarse en pantalla.
+Por ejemplo: 8'h03
+Significa: Digito 0, fila 3 de ese digito, por lo cual indica 8'h03: data = 8'b01100110
+- BRAM: Funciona como una memoria de video encargada de almacenar la imagen completa que será mostrada en pantalla. Utiliza dos puertos: Puerto A de escritura de píxeles y Puerto B lectura de píxeles.
+El puerto A permite que otros modulos escriban en el, por ejemplo cuando se modifica la hora y el puerto B permite que el controlador VGA consulte continuamente los colores de cada píxel para ser enviados al monitor. Además la memoria se inicializa con una imagen de fondo utilizando un archivo (.coe).
+- top_reloj: Este modulo fue reutilizado ya que fue implementado por el compañero Gabriel para probar el control de hora, las modificaciones implementadas son simplemente que siga funcionando como modulo top en el cual se instanciaron los modulos anteriormente mencionados. 
