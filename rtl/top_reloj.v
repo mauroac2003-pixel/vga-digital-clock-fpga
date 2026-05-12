@@ -159,6 +159,7 @@ module top_reloj (
 
     // ============================================================
     // img_gen - recorre la pantalla y escribe colores en la VRAM
+    // Ahora recibe sw y blink para el parpadeo en modo edición
     // ============================================================
     img_gen imagen (
         .clk  (clk),
@@ -166,6 +167,8 @@ module top_reloj (
         .hh   (hh),
         .mm   (mm),
         .ss   (ss),
+        .sw   (sw),      // modo edición para parpadeo
+        .blink(blink),   // señal de parpadeo ~2Hz
         .we   (we),
         .addr (wr_addr),
         .data (wr_data)
