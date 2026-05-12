@@ -3,24 +3,21 @@
 # Script: run_tests.sh
 # Descripción: Compila y ejecuta todos los testbenches del
 #              proyecto usando Icarus Verilog (iverilog).
-#              Reporta PASS/FAIL por módulo.
-# Uso: ./run_tests.sh
+#              Incluye testbenches de Etapa 1 y Etapa 2.
+# Uso: cd sim/ && ./run_tests.sh
 # ============================================================
 
-# Colores para output
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 YELLOW='\033[1;33m'
-NC='\033[0m' # Sin color
+NC='\033[0m'
 
-# Directorios
 RTL_DIR="../rtl"
 TB_DIR="."
 OUT_DIR="./out"
 
 mkdir -p "$OUT_DIR"
 
-# Contador de resultados
 PASS=0
 FAIL=0
 TOTAL=0
@@ -30,7 +27,6 @@ echo " Ejecutando testbenches - VGA Digital Clock"
 echo "=============================================="
 echo ""
 
-# ── Función para correr un testbench ──
 run_tb() {
     local tb_file="$1"
     local rtl_files="$2"
@@ -38,23 +34,20 @@ run_tb() {
 
     echo -n "► $tb_name ... "
 
-    # Compilar
     iverilog -o "$OUT_DIR/${tb_name}.out" \
              $rtl_files \
              "$tb_file" 2>"$OUT_DIR/${tb_name}_compile.log"
 
     if [ $? -ne 0 ]; then
         echo -e "${RED}ERROR DE COMPILACIÓN${NC}"
-        echo "  Ver: $OUT_DIR/${tb_name}_compile.log"
+        cat "$OUT_DIR/${tb_name}_compile.log" | sed 's/^/  /'
         FAIL=$((FAIL + 1))
         TOTAL=$((TOTAL + 1))
         return
     fi
 
-    # Ejecutar y capturar salida
     vvp "$OUT_DIR/${tb_name}.out" > "$OUT_DIR/${tb_name}_result.log" 2>&1
 
-    # Contar PASS y FAIL en la salida
     local passes=$(grep -c "^PASS" "$OUT_DIR/${tb_name}_result.log")
     local fails=$(grep -c "^FAIL" "$OUT_DIR/${tb_name}_result.log")
 
@@ -66,17 +59,17 @@ run_tb() {
         grep "^FAIL" "$OUT_DIR/${tb_name}_result.log" | sed 's/^/  /'
         FAIL=$((FAIL + 1))
     else
-        echo -e "${YELLOW}INFO (sin assertions PASS/FAIL)${NC}"
+        echo -e "${YELLOW}INFO (sin assertions)${NC}"
         PASS=$((PASS + 1))
     fi
 
     TOTAL=$((TOTAL + 1))
 }
 
-# ── Ejecutar cada testbench ──
+echo "── Etapa 1: Módulos base ──────────────────────"
 
 run_tb "$TB_DIR/tb_clock_divider.v" \
-       "$RTL_DIR/clock_divider.v"
+       ""
 
 run_tb "$TB_DIR/tb_clk_25MHz.v" \
        "$RTL_DIR/clk_25MHz.v"
@@ -99,7 +92,23 @@ run_tb "$TB_DIR/tb_font_rom.v" \
 run_tb "$TB_DIR/tb_display_7seg.v" \
        "$RTL_DIR/display_7seg.v"
 
-# ── Resumen ──
+echo ""
+echo "── Etapa 2: Sistema funcional VGA ────────────"
+
+run_tb "$TB_DIR/tb_img_gen.v" \
+       "$RTL_DIR/img_gen.v"
+
+run_tb "$TB_DIR/tb_top_reloj.v" \
+       "$RTL_DIR/debouncer.v \
+        $RTL_DIR/clock_divider.v \
+        $RTL_DIR/control_hora_manual.v \
+        $RTL_DIR/display_7seg.v \
+        $RTL_DIR/clk_25MHz.v \
+        $RTL_DIR/vga_sync.v \
+        $RTL_DIR/BRAM.v \
+        $RTL_DIR/img_gen.v \
+        $RTL_DIR/top_reloj.v"
+
 echo ""
 echo "=============================================="
 echo " RESUMEN"
@@ -109,7 +118,6 @@ echo -e " ${GREEN}PASS:   $PASS${NC}"
 echo -e " ${RED}FAIL:   $FAIL${NC}"
 echo "=============================================="
 
-# Retornar código de error si hubo fallos
 if [ "$FAIL" -gt 0 ]; then
     exit 1
 else
