@@ -12,14 +12,7 @@
 //              simulación usando un fondo negro por defecto.
 // ============================================================
 
-// Stub de font_rom para simulación (devuelve patrón fijo)
-module font_rom (
-    input  [7:0] addr,
-    output [7:0] data
-);
-    // Patrón: columnas 2 y 5 encendidas para cualquier dígito
-    assign data = 8'b00100100;
-endmodule
+
 
 module tb_img_gen;
 
@@ -100,7 +93,6 @@ module tb_img_gen;
         end
 
         // Verificar que después de 640 píxeles estamos en fila 1
-        @(posedge clk);
         if (addr == 19'd640)
             $display("PASS: Tras 640 pixeles addr=640 (inicio fila 1)");
         else
